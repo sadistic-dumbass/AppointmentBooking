@@ -1,8 +1,9 @@
 namespace AppointmentSystem.Domain.Entities;
+
 public class DoctorAvailability : BaseEntity
 {
     public Guid DoctorId { get; private set; }
-
+    public Doctor? Doctor { get; private set; }
     public DateTime StartDateTime { get; private set; }
     public DateTime EndDateTime { get; private set; }
 
