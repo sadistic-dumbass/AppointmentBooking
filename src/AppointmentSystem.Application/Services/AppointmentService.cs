@@ -1,9 +1,9 @@
-using AppointmentSystem.Application.Interfaces;
+using AppointmentSystem.Application.Interfaces.Repositories;
 using AppointmentSystem.Domain.Entities;
 
 namespace AppointmentSystem.Application.Services;
 
-public class AppointmentService
+public class AppointmentService : IAppointmentService
 {
     private readonly IDoctorRepository _doctorRepository;
     private readonly IPatientRepository _patientRepository;

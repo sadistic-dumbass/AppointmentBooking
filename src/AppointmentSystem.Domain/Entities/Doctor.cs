@@ -18,4 +18,10 @@ public class Doctor : BaseEntity
         PasswordHash = passwordHash;
         Speciality = speciality;
     }
+    public void UpdateDetails(string name, string email, string speciality)
+    {
+        Name = name;
+        Email = email;
+        Speciality = speciality;
+    }
 }
