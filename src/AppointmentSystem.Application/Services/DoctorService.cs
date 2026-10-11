@@ -15,12 +15,12 @@ public class DoctorService : IDoctorService
 
     public async Task<DoctorResponse> CreateAsync(CreateDoctorRequest request)
     {
-        var existingDoctor = await _doctorRepository.GetByEmailAsync(request.Email);
+        var existingDoctor = await _doctorRepository.GetByEmailAsync(request.Email.ToLower());
 
         if (existingDoctor is not null)        
             throw new InvalidOperationException("A doctor with this email already exists.");
 
-        var doctor = new Doctor(request.Name,request.Email,request.Password,request.Speciality);
+        var doctor = new Doctor(request.Email, request.Name, request.Password, request.Speciality);
 
         await _doctorRepository.AddAsync(doctor);
         await _doctorRepository.SaveChangesAsync();

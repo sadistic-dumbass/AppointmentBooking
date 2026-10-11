@@ -13,7 +13,7 @@ public class DoctorsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateDoctorRequest request)
+    public async Task<IActionResult> Create(CreateDoctorRequest request, CancellationToken cancellationToken)
     {
         var doctor = await _doctorService.CreateAsync(request);
 
@@ -21,7 +21,7 @@ public class DoctorsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var doctors = await _doctorService.GetAllAsync();
 
@@ -29,7 +29,7 @@ public class DoctorsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
         var doctor = await _doctorService.GetByIdAsync(id);
 

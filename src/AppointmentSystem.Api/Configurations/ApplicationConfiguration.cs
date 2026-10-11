@@ -14,6 +14,8 @@ public static class ApplicationConfiguration
         services.AddDatabase(configurations);
         services.AddApplicationServices();
         services.AddInfrastructureServices();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
 
         return services;
     }
