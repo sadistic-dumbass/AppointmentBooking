@@ -10,7 +10,7 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
     }
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        _logger.LogError("An Unhandled Exception occurred while processing the request", exception);
+        _logger.LogError($"An Unhandled Exception occurred while processing the request, {exception}");
         httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         var problem = new ProblemDetails
         {
