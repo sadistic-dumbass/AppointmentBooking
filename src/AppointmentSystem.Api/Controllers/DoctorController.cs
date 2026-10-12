@@ -1,4 +1,4 @@
-using AppointmentSystem.Application.DTOs.Doctors;
+using AppointmentSystem.Application.DTOs.Doctor;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -37,5 +37,24 @@ public class DoctorsController : ControllerBase
             return NotFound();
 
         return Ok(doctor);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, UpdateDoctorRequest updateDoctorRequest, CancellationToken cancellationToken)
+    {
+        var doctor = await _doctorService.UpdateAsync(id, updateDoctorRequest);
+
+        if (doctor is null)
+            return NotFound();
+
+        return Ok(doctor);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _doctorService.DeleteAsync(id);
+
+        return NoContent();
     }
 }

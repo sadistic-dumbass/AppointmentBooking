@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AppointmentSystem.Application.DTOs.Doctors;
+namespace AppointmentSystem.Application.DTOs.Patient;
 
-public class UpdateDoctorRequest
+public class UpdatePatientRequest
 {
     [Required]
     [MinLength(2)]
@@ -10,6 +10,4 @@ public class UpdateDoctorRequest
     [Required]
     [EmailAddress]
     public string Email { get; set; } = string.Empty;
-    [Required]
-    public string Speciality { get; set; } = string.Empty;
 }

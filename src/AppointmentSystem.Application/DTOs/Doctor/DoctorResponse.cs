@@ -1,4 +1,4 @@
-namespace AppointmentSystem.Application.DTOs.Doctors;
+namespace AppointmentSystem.Application.DTOs.Doctor;
 
 public class DoctorResponse
 {

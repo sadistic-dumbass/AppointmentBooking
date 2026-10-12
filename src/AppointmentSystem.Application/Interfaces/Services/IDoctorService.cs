@@ -1,4 +1,4 @@
-using AppointmentSystem.Application.DTOs.Doctors;
+using AppointmentSystem.Application.DTOs.Doctor;
 
 public interface IDoctorService
 {

@@ -33,12 +33,14 @@ public static class ApplicationConfiguration
     private static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddScoped<IDoctorService, DoctorService>();
+        services.AddScoped<IPatientService, PatientService>();
         return services;
     }
 
     private static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
         services.AddScoped<IDoctorRepository, DoctorRepository>();
+        services.AddScoped<IPatientRepository, PatientRepository>();
         return services;
     }
 }
