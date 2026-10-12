@@ -11,7 +11,7 @@ public class PatientService : IPatientService
     }
     public async Task<PatientResponse> CreateAsync(CreatePatientRequest request)
     {
-        var existingPatient = _patientRepository.GetByEmailAsync(request.Email.ToLower());
+        var existingPatient = await _patientRepository.GetByEmailAsync(request.Email.ToLower());
 
         if (existingPatient is not null) 
             throw new InvalidOperationException($"Patient with {request.Email} already exists.");
@@ -23,26 +23,50 @@ public class PatientService : IPatientService
         return MapToResponse(patient);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task<IEnumerable<PatientResponse>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var patients = await _patientRepository.GetAllAsync();
+
+        return patients.Select(MapToResponse);
     }
 
-    public Task<IEnumerable<PatientResponse>> GetAllAsync()
+    public async Task<PatientResponse?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var doctor = await _patientRepository.GetByIdAsync(id);
+
+        return doctor is null ? null : MapToResponse(doctor);
     }
 
-    public Task<PatientResponse?> GetByIdAsync(Guid id)
+    public async Task<PatientResponse> UpdateAsync(Guid id,UpdatePatientRequest request)
     {
-        throw new NotImplementedException();
+        var patient = await _patientRepository.GetByIdAsync(id);
+
+        if (patient is null)
+            throw new KeyNotFoundException($"Patient with id '{id}' was not found.");
+
+        var patientWithEmail = await _patientRepository.GetByEmailAsync(request.Email);
+
+        if (patientWithEmail is not null && patientWithEmail.Id != id)
+            throw new InvalidOperationException("A patient with this email already exists.");
+
+        patient.UpdateDetails(request.Name,request.Email);
+
+        _patientRepository.Update(patient);
+        await _patientRepository.SaveChangesAsync();
+
+        return MapToResponse(patient);
     }
 
-    public Task<PatientResponse> UpdateAsync(Guid id, UpdatePatientRequest request)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
-    }
+        var patient = await _patientRepository.GetByIdAsync(id);
 
+        if (patient is null)
+            throw new KeyNotFoundException($"Patient with id '{id}' was not found.");
+ 
+        _patientRepository.Delete(patient);
+        await _patientRepository.SaveChangesAsync();
+    }
     private static PatientResponse MapToResponse(Patient patient)
     {
         return new PatientResponse

@@ -14,4 +14,9 @@ public class Patient : BaseEntity
         Name = name;
         PasswordHash = passwordHash;
     }
+    public void UpdateDetails(string name, string email)
+    {
+        Name = name;
+        Email = email;
+    }
 }
